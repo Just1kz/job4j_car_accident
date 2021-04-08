@@ -7,7 +7,6 @@ public class Main {
         context.reg(ConsoleInput.class);
         context.reg(StartUI.class);
 
-
         StartUI ui = context.get(StartUI.class);
 
         ui.add("Petr Arsentev");
