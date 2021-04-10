@@ -40,6 +40,16 @@
     </div>
 </div>
 
+<div class="container">
+    <div class="row">
+        <ul class="nav">
+            <li class="nav-item">
+                <a class="nav-link" href="<c:url value='/create'/>"><h3>Добавить инцидент</h3></a>
+            </li>
+        </ul>
+    </div>
+</div>
+
 <div class="table table-sm table-bordered" style="margin-left:150px; width: 1000px; margin-top: 15px">
     <table class="table" id = "table" >
         <thead style="font-size:14px;">
@@ -48,6 +58,7 @@
             <th scope="col" style="text-align: center;">Name</th>
             <th scope="col" style="text-align: center;">Text</th>
             <th scope="col" style="text-align: center;">Address</th>
+            <th scope="col" style="text-align: center;">Status</th>
         </tr>
         </thead>
 
@@ -56,7 +67,10 @@
 <c:forEach items="${allAccident}" var="accidents">
     <tr>
         <td style="text-align: center;">
-            <c:out value="${accidents.id}"/>
+            <a href='<c:url value="/edit.jsp?id=${accidents.id}"/>'>
+                <i ><c:out value="${accidents.id}"/></i>
+            </a>
+<%--            <c:out value="${accidents.id}"/>--%>
         </td>
         <td style="text-align: center;">
             <c:out value="${accidents.name}"/>
@@ -66,6 +80,9 @@
         </td>
         <td style="text-align: center;">
             <c:out value="${accidents.address}"/>
+        </td>
+        <td style="text-align: center;">
+            <c:out value="${accidents.status}"/>
         </td>
     </tr>
 

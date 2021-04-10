@@ -10,6 +10,7 @@ public class Accident {
     private String name;
     private String text;
     private String address;
+    private String status = "Зарегистрирована";
 
     public Accident() {
     }
@@ -18,6 +19,13 @@ public class Accident {
         this.name = name;
         this.text = text;
         this.address = address;
+    }
+
+    public Accident(String name, String text, String address, String status) {
+        this.name = name;
+        this.text = text;
+        this.address = address;
+        this.status = status;
     }
 
     public int getId() {
@@ -50,6 +58,14 @@ public class Accident {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     @Override

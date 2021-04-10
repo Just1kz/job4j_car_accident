@@ -30,6 +30,10 @@ public class AccidentMem {
         accidentData.putIfAbsent(count, accident);
     }
 
+    public void updateAccident(Accident accident) {
+        accidentData.put(accident.getId(), accident);
+    }
+
     public List<Accident> showAllAccident() {
         return new ArrayList<>(accidentData.values());
     }

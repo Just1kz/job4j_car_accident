@@ -12,7 +12,6 @@ public class IndexControl {
 
     @GetMapping("/")
     public String index(Model model) {
-        model.addAttribute("user", "Petr Arsentev");
         model.addAttribute("allAccident", rsl.showAllAccident());
         return "index";
     }
