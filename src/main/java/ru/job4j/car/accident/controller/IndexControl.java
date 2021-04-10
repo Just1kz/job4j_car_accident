@@ -8,11 +8,11 @@ import ru.job4j.car.accident.repository.AccidentMem;
 
 @Controller
 public class IndexControl {
-    private final AccidentMem rsl = AccidentMem.of();
-
-    @GetMapping("/")
-    public String index(Model model) {
-        model.addAttribute("allAccident", rsl.showAllAccident());
-        return "index";
-    }
+//    private final AccidentMem rsl = AccidentMem.of();
+//
+//    @GetMapping("/")
+//    public String index(Model model) {
+//        model.addAttribute("allAccident", rsl.showAllAccident());
+//        return "index";
+//    }
 }

@@ -8,6 +8,7 @@ import java.util.Objects;
 public class Accident {
     private int id;
     private String name;
+    private AccidentType accidentType;
     private String text;
     private String address;
     private String status = "Зарегистрирована";
@@ -23,6 +24,14 @@ public class Accident {
 
     public Accident(String name, String text, String address, String status) {
         this.name = name;
+        this.text = text;
+        this.address = address;
+        this.status = status;
+    }
+
+    public Accident(String name, AccidentType accidentType, String text, String address) {
+        this.name = name;
+        this.accidentType = accidentType;
         this.text = text;
         this.address = address;
         this.status = status;
@@ -66,6 +75,14 @@ public class Accident {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public AccidentType getAccidentType() {
+        return accidentType;
+    }
+
+    public void setAccidentType(AccidentType accidentType) {
+        this.accidentType = accidentType;
     }
 
     @Override

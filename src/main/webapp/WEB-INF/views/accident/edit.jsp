@@ -54,6 +54,17 @@
         value="${accident.name}">
     </div>
     <div class="form-group" style="margin-left:390px; width: 700px; margin-top: 15px">
+        <label>Тип нарушения</label>
+        <%--        <input type="text" class="form-control" name="types" id="types" placeholder="Выберите тип">--%>
+        <div>
+            <select name="type.id" id="type.id" placeholder="Выберите тип">
+                <c:forEach var="type" items="${types}" >
+                    <option value="${type.id}">${type.name}</option>
+                </c:forEach>
+            </select>
+        </div>
+    </div>
+    <div class="form-group" style="margin-left:390px; width: 700px; margin-top: 15px">
         <label>Текст</label>
         <input type="text" class="form-control" name="text" id="text" placeholder="Введите Текст"
                value="${accident.text}">

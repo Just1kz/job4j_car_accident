@@ -56,6 +56,7 @@
         <tr style="background-color: rgb(0,150,350)">
             <th scope="col" style="text-align: center;">ID</th>
             <th scope="col" style="text-align: center;">Name</th>
+            <th scope="col" style="text-align: center;">Type</th>
             <th scope="col" style="text-align: center;">Text</th>
             <th scope="col" style="text-align: center;">Address</th>
             <th scope="col" style="text-align: center;">Status</th>
@@ -74,6 +75,9 @@
         </td>
         <td style="text-align: center;">
             <c:out value="${accidents.name}"/>
+        </td>
+        <td style="text-align: center;">
+            <c:out value="${accidents.accidentType.name}"/>
         </td>
         <td style="text-align: center;">
             <c:out value="${accidents.text}"/>
