@@ -34,6 +34,10 @@ public class AccidentMem {
         accidentData.put(accident.getId(), accident);
     }
 
+    public Accident findById(int id) {
+        return accidentData.get(id);
+    }
+
     public List<Accident> showAllAccident() {
         return new ArrayList<>(accidentData.values());
     }

@@ -67,7 +67,7 @@
 <c:forEach items="${allAccident}" var="accidents">
     <tr>
         <td style="text-align: center;">
-            <a href='<c:url value="/edit.jsp?id=${accidents.id}"/>'>
+            <a href='<c:url value="/edit?id=${accidents.id}"/>'>
                 <i ><c:out value="${accidents.id}"/></i>
             </a>
 <%--            <c:out value="${accidents.id}"/>--%>
