@@ -100,8 +100,11 @@ public class AccidentJdbcTemplate {
                 accident.getAddress(),
                 accident.getStatus(),
                 accident.getId());
+<<<<<<< HEAD
         jdbc.update("delete from accident_rule where id_accident = ? ",
         accident.getId());
+=======
+>>>>>>> origin/master
         for (String rsl : ids) {
             jdbc.update("insert into accident_rule (id_accident, id_rule) VALUES (?, ?) ",
                     accident.getId(),
