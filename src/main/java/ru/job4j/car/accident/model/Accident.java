@@ -3,6 +3,7 @@ package ru.job4j.car.accident.model;
 import org.springframework.stereotype.Component;
 
 import java.util.Objects;
+import java.util.Set;
 
 @Component
 public class Accident {
@@ -12,6 +13,7 @@ public class Accident {
     private String text;
     private String address;
     private String status = "Зарегистрирована";
+    private Set<Rule> rules;
 
     public Accident() {
     }
@@ -34,7 +36,14 @@ public class Accident {
         this.accidentType = accidentType;
         this.text = text;
         this.address = address;
-        this.status = status;
+    }
+
+    public Accident(String name, AccidentType accidentType, String text, String address, Set<Rule> rules) {
+        this.name = name;
+        this.accidentType = accidentType;
+        this.text = text;
+        this.address = address;
+        this.rules = rules;
     }
 
     public int getId() {
@@ -83,6 +92,26 @@ public class Accident {
 
     public void setAccidentType(AccidentType accidentType) {
         this.accidentType = accidentType;
+    }
+
+    public Set<Rule> getRules() {
+        return rules;
+    }
+
+    public void setRules(Set<Rule> rules) {
+        this.rules = rules;
+    }
+
+    public void addRules(Rule rule) {
+        rules.add(rule);
+    }
+
+    public StringBuffer getRulesString() {
+        StringBuffer rsl = new StringBuffer();
+        for (Rule zxc : rules) {
+            rsl.append(zxc.getName()).append(System.lineSeparator());
+        }
+        return rsl;
     }
 
     @Override

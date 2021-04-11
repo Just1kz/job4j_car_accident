@@ -62,6 +62,17 @@
         </div>
     </div>
     <div class="form-group" style="margin-left:390px; width: 700px; margin-top: 15px">
+        <label>Тип статьи</label>
+        <%--        <input type="text" class="form-control" name="types" id="types" placeholder="Выберите тип">--%>
+        <div>
+            <select name="rIds" id="rIds" placeholder="Выберите статью/статьи" multiple>
+                <c:forEach var="rule" items="${rules}" >
+                    <option value="${rule.id}">${rule.name}</option>
+                </c:forEach>
+            </select>
+        </div>
+    </div>
+    <div class="form-group" style="margin-left:390px; width: 700px; margin-top: 15px">
         <label>Текст</label>
         <input type="text" class="form-control" name="text" id="text" placeholder="Введите суть нарушения">
     </div>
@@ -74,7 +85,7 @@
 
 <script>
     function validate() {
-        let fields = [$("#name"), $("#text"), $("#address"), $("#type.id")];
+        let fields = [$("#name"), $("#text"), $("#address"), $("#type.id"), $("#rIds")];
         let result = true;
         let answer = '';
         for (let i = 0; i < fields.length; i++) {
