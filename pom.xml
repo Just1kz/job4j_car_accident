@@ -13,6 +13,8 @@
         <maven.compiler.target>14</maven.compiler.target>
     </properties>
 
+    <packaging>war</packaging>
+
     <dependencies>
 
         <dependency>
@@ -131,6 +133,14 @@
             <artifactId>spring-security-config</artifactId>
             <version>5.0.4.RELEASE</version>
         </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-war-plugin -->
+        <dependency>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-war-plugin</artifactId>
+            <version>3.3.1</version>
+        </dependency>
+
     </dependencies>
     <build>
         <plugins>
@@ -173,6 +183,14 @@
                         </goals>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>3.3.1</version>
+                <configuration>
+                    <failOnMissingWebXml>false</failOnMissingWebXml>
+                </configuration>
             </plugin>
         </plugins>
     </build>
