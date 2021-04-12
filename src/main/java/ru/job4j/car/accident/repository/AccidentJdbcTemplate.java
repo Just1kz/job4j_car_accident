@@ -50,19 +50,19 @@ public class AccidentJdbcTemplate {
 
     public List<Accident> getAllAccidents() {
         return jdbc.query(
-                "select id, name, type_id, text, address, status  from accident",
+                "select id, name, type_id, text, address, status  from accident order by id",
                 accidentRowMapper);
     }
 
     public List<AccidentType> getAllAccidentType() {
         return jdbc.query(
-                "select id, name from type",
+                "select id, name from type order by id",
                 accidentTypeRowMapper);
     }
 
     public List<Rule> getAllRules() {
         return jdbc.query(
-                "select id, name from rule",
+                "select id, name from rule order by id",
                 ruleRowMapper);
     }
 
