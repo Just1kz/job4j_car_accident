@@ -106,14 +106,6 @@ public class Accident {
         rules.add(rule);
     }
 
-    public StringBuffer getRulesString() {
-        StringBuffer rsl = new StringBuffer();
-        for (Rule zxc : rules) {
-            rsl.append(zxc.getName()).append(System.lineSeparator());
-        }
-        return rsl;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {

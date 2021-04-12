@@ -80,9 +80,15 @@
         <td style="text-align: center;">
             <c:out value="${accidents.accidentType.name}"/>
         </td>
+
         <td style="text-align: center;">
-            <c:out value="${accidents.rulesString}"/>
+    <c:forEach items="${accidents.rules}" var="rules">
+
+            <c:out value="${rules.name}"/>
+
+    </c:forEach>
         </td>
+
         <td style="text-align: center;">
             <c:out value="${accidents.text}"/>
         </td>
