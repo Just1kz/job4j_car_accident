@@ -29,31 +29,35 @@ public class AccidentMem {
         addRule(Rule.of(3, "Статья3"));
         addRule(Rule.of(4, "Статья4"));
 
-        addAccident(new Accident("Проехал на красный",
+        addOrUpdateAccident(new Accident("Проехал на красный",
                 "водитель машины под номером таким то.....",
                 "Красный проспект 45"), 4, new String[]{"3"});
-        addAccident(new Accident("Пересёк двойную сплошную",
+        addOrUpdateAccident(new Accident("Пересёк двойную сплошную",
                 "водитель машины под номером таким то.....", "Красный проспект 15"), 4,
                 new String[]{"1", "3"});
-        addAccident(new Accident("Разворот в неположенном месте",
+        addOrUpdateAccident(new Accident("Разворот в неположенном месте",
                 "водитель машины под номером таким то.....", "Красный проспект 35"), 4,
                 new String[]{"2", "3"});
-        addAccident(new Accident("Авария",
+        addOrUpdateAccident(new Accident("Авария",
                 "водитель машины под номером таким то.....", "Красный проспект 20"), 4,
                 new String[]{"1"});
-        addAccident(new Accident("Проехал на красный",
+        addOrUpdateAccident(new Accident("Проехал на красный",
                 "водитель машины под номером таким то.....",
                 "Красный проспект 45"), 4, new String[]{"1", "2", "3"});
 
     }
 
-    public void addAccident(Accident accident, int type, String[] ids) {
+    public void addOrUpdateAccident(Accident accident, int type, String[] ids) {
         AccidentType accidentType = findByIdAccidentType(type);
         Set<Rule> ruleSet = findByIdRuleInMassive(ids);
-        accident.setId(ACC_ID_FOR_ACCIDENT.incrementAndGet());
         accident.setAccidentType(accidentType);
         accident.setRules(ruleSet);
-        accidentData.putIfAbsent(accident.getId(), accident);
+        if (accident.getId() == 0) {
+            accident.setId(ACC_ID_FOR_ACCIDENT.incrementAndGet());
+            accidentData.put(accident.getId(), accident);
+        } else  {
+            accidentData.put(accident.getId(), accident);
+        }
     }
 
     public void addAccidentType(AccidentType accidentType) {
@@ -64,14 +68,6 @@ public class AccidentMem {
     public void addRule(Rule rule) {
         rule.setId(ACC_ID_FOR_RULE.incrementAndGet());
         rules.putIfAbsent(rule.getId(), rule);
-    }
-
-    public void updateAccident(Accident accident, int type, String[] ids) {
-        AccidentType accidentType = findByIdAccidentType(type);
-        Set<Rule> ruleSet = findByIdRuleInMassive(ids);
-        accident.setAccidentType(accidentType);
-        accident.setRules(ruleSet);
-        accidentData.put(accident.getId(), accident);
     }
 
     public Accident findByIdAccident(int id) {
