@@ -7,67 +7,63 @@ import ru.job4j.car.accident.model.Rule;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @Repository
 public class AccidentMem {
     private final Map<Integer, Accident> accidentData = new ConcurrentHashMap<>();
     private final Map<Integer, AccidentType> accidentTypes = new ConcurrentHashMap<>();
     private final Map<Integer, Rule> rules = new ConcurrentHashMap<>();
-    private Integer countForAccident = 0;
-    private Integer countForAccidentType = 0;
-    private Integer countForRule = 0;
+    private static final AtomicInteger ACC_ID_FOR_ACCIDENT = new AtomicInteger(0);
+    private static final AtomicInteger ACC_ID_FOR_ACCIDENT_TYPE = new AtomicInteger(0);
+    private static final AtomicInteger ACC_ID_FOR_RULE = new AtomicInteger(0);
 
-    public static AccidentMem of() {
-        AccidentMem accidentMem = new AccidentMem();
-        accidentMem.addAccidentType(AccidentType.of(1, "Две машины"));
-        accidentMem.addAccidentType(AccidentType.of(2, "Машина и человек"));
-        accidentMem.addAccidentType(AccidentType.of(3, "Машина и велосипед"));
-        accidentMem.addAccidentType(AccidentType.of(4, "Одна машина"));
+    public AccidentMem() {
+        addAccidentType(AccidentType.of(1, "Две машины"));
+        addAccidentType(AccidentType.of(2, "Машина и человек"));
+        addAccidentType(AccidentType.of(3, "Машина и велосипед"));
+        addAccidentType(AccidentType.of(4, "Одна машина"));
 
-        accidentMem.addRule(Rule.of(1, "Статья1"));
-        accidentMem.addRule(Rule.of(2, "Статья2"));
-        accidentMem.addRule(Rule.of(3, "Статья3"));
-        accidentMem.addRule(Rule.of(4, "Статья4"));
+        addRule(Rule.of(1, "Статья1"));
+        addRule(Rule.of(2, "Статья2"));
+        addRule(Rule.of(3, "Статья3"));
+        addRule(Rule.of(4, "Статья4"));
 
-        accidentMem.addAccident(new Accident("Проехал на красный",
+        addAccident(new Accident("Проехал на красный",
                 "водитель машины под номером таким то.....",
                 "Красный проспект 45"), 4, new String[]{"3"});
-        accidentMem.addAccident(new Accident("Пересёк двойную сплошную",
+        addAccident(new Accident("Пересёк двойную сплошную",
                 "водитель машины под номером таким то.....", "Красный проспект 15"), 4,
                 new String[]{"1", "3"});
-        accidentMem.addAccident(new Accident("Разворот в неположенном месте",
+        addAccident(new Accident("Разворот в неположенном месте",
                 "водитель машины под номером таким то.....", "Красный проспект 35"), 4,
                 new String[]{"2", "3"});
-        accidentMem.addAccident(new Accident("Авария",
+        addAccident(new Accident("Авария",
                 "водитель машины под номером таким то.....", "Красный проспект 20"), 4,
                 new String[]{"1"});
-        accidentMem.addAccident(new Accident("Проехал на красный",
+        addAccident(new Accident("Проехал на красный",
                 "водитель машины под номером таким то.....",
                 "Красный проспект 45"), 4, new String[]{"1", "2", "3"});
 
-        return accidentMem;
     }
 
     public void addAccident(Accident accident, int type, String[] ids) {
-        countForAccident++;
         AccidentType accidentType = findByIdAccidentType(type);
         Set<Rule> ruleSet = findByIdRuleInMassive(ids);
-        accident.setId(countForAccident);
+        accident.setId(ACC_ID_FOR_ACCIDENT.incrementAndGet());
         accident.setAccidentType(accidentType);
         accident.setRules(ruleSet);
-        accidentData.putIfAbsent(countForAccident, accident);
+        accidentData.putIfAbsent(accident.getId(), accident);
     }
 
     public void addAccidentType(AccidentType accidentType) {
-        countForAccidentType++;
-        accidentType.setId(countForAccidentType);
-        accidentTypes.putIfAbsent(countForAccidentType, accidentType);
+        accidentType.setId(ACC_ID_FOR_ACCIDENT_TYPE.incrementAndGet());
+        accidentTypes.putIfAbsent(accidentType.getId(), accidentType);
     }
 
     public void addRule(Rule rule) {
-        countForRule++;
-        rule.setId(countForRule);
-        rules.putIfAbsent(countForRule, rule);
+        rule.setId(ACC_ID_FOR_RULE.incrementAndGet());
+        rules.putIfAbsent(rule.getId(), rule);
     }
 
     public void updateAccident(Accident accident, int type, String[] ids) {
