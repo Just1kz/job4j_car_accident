@@ -72,42 +72,39 @@ public class AccidentJdbcTemplate {
                 ruleRowMapperManyToMany, id);
     }
 
-    public Accident addAccident(Accident accident, int type, String[] ids) {
+    public void addOrUpdateAccident(Accident accident, int type, String[] ids) {
         AccidentType accidentType = findTypeByID(type);
         accident.setAccidentType(accidentType);
-        jdbc.update("insert into accident (name, type_id, text, address, status) values (?, ?, ?, ?, ?)",
-                accident.getName(),
-                accident.getAccidentType().getId(),
-                accident.getText(),
-                accident.getAddress(),
-                accident.getStatus());
-        Accident accidentRsl = findAccidentByNameAndAddress(accident.getName(), accident.getAddress());
-        for (String rsl : ids) {
-            jdbc.update("insert into accident_rule (id_accident, id_rule) VALUES (?, ?) ",
-                    accidentRsl.getId(),
-                    Integer.parseInt(rsl));
-        }
-        return accident;
-    }
 
-    public Accident updateAccident(Accident accident, int type, String[] ids) {
-        AccidentType accidentType = findTypeByID(type);
-        accident.setAccidentType(accidentType);
-        jdbc.update("update accident set name = ?, type_id = ?, text = ?, address = ?, status = ? where id = ?",
-                accident.getName(),
-                accident.getAccidentType().getId(),
-                accident.getText(),
-                accident.getAddress(),
-                accident.getStatus(),
-                accident.getId());
-        jdbc.update("delete from accident_rule where id_accident = ? ",
-        accident.getId());
+        int id = 0;
+
+        if (accident.getId() == 0) {
+            jdbc.update("insert into accident (name, type_id, text, address, status) values (?, ?, ?, ?, ?)",
+                    accident.getName(),
+                    accident.getAccidentType().getId(),
+                    accident.getText(),
+                    accident.getAddress(),
+                    accident.getStatus());
+            Accident accidentRsl = findAccidentByNameAndAddress(accident.getName(), accident.getAddress());
+            id = accidentRsl.getId();
+        } else {
+            jdbc.update("update accident set name = ?, type_id = ?, text = ?, address = ?, status = ? where id = ?",
+                    accident.getName(),
+                    accident.getAccidentType().getId(),
+                    accident.getText(),
+                    accident.getAddress(),
+                    accident.getStatus(),
+                    accident.getId());
+            jdbc.update("delete from accident_rule where id_accident = ? ",
+                    accident.getId());
+            id = accident.getId();
+        }
+
         for (String rsl : ids) {
             jdbc.update("insert into accident_rule (id_accident, id_rule) VALUES (?, ?) ",
-                    accident.getId(),
+                    id,
                     Integer.parseInt(rsl));
         }
-        return accident;
     }
 
     public Accident findAccidentByID(int id) {
@@ -138,6 +135,4 @@ public class AccidentJdbcTemplate {
                 ruleRowMapper,
                 id);
     }
-
-
 }

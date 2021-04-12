@@ -41,11 +41,7 @@ public class AccidentControl {
     public String save(@ModelAttribute Accident accident,
                        @RequestParam("type.id") int id,
                        @RequestParam("rIds") String[] ids) {
-        if (accident.getId() == 0) {
-            accidents.addAccident(accident, id, ids);
-        } else {
-            accidents.updateAccident(accident, id, ids);
-        }
+        accidents.addOrUpdateAccident(accident, id, ids);
         return "redirect:/";
     }
 }
