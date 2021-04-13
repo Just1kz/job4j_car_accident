@@ -39,7 +39,7 @@ public class HbmConfig {
                                                   DataSource ds) {
         LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
         sessionFactory.setDataSource(ds);
-        sessionFactory.setPackagesToScan("ru.job4j.accident.model");
+        sessionFactory.setPackagesToScan("ru.job4j.car.accident");
         Properties cfg = new Properties();
         cfg.setProperty("hibernate.dialect", dialect);
         cfg.setProperty("hibernate.hbm2ddl.auto", update);

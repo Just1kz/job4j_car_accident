@@ -2,18 +2,39 @@ package ru.job4j.car.accident.model;
 
 import org.springframework.stereotype.Component;
 
+import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
 @Component
+@Entity(name = "Accident")
+@Table(name="accident")
 public class Accident {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
+    @Column(name = "name")
     private String name;
+
+    @ManyToOne
     private AccidentType accidentType;
+
+    @Column(name = "text")
     private String text;
+
+    @Column(name = "address")
     private String address;
+
+    @Column(name = "status")
     private String status = "Зарегистрирована";
-    private Set<Rule> rules;
+
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(name = "accident_rule",
+            joinColumns = { @JoinColumn(name = "id_accident") },
+            inverseJoinColumns = { @JoinColumn(name = "id_rule") })
+    private Set<Rule> rules = new HashSet<>();
 
     public Accident() {
     }
@@ -44,6 +65,17 @@ public class Accident {
         this.text = text;
         this.address = address;
         this.rules = rules;
+    }
+
+    public static Accident of(String name, String text, String address,
+                              AccidentType type, Set<Rule> rules) {
+        Accident accident = new Accident();
+        accident.name = name;
+        accident.text = text;
+        accident.address = address;
+        accident.accidentType = type;
+        accident.rules = rules;
+        return accident;
     }
 
     public int getId() {
@@ -103,7 +135,7 @@ public class Accident {
     }
 
     public void addRules(Rule rule) {
-        rules.add(rule);
+        this.rules.add(rule);
     }
 
     @Override

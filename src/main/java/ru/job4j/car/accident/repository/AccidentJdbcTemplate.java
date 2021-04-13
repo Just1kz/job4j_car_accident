@@ -2,15 +2,16 @@ package ru.job4j.car.accident.repository;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
-import org.springframework.stereotype.Repository;
 import ru.job4j.car.accident.model.Accident;
 import ru.job4j.car.accident.model.AccidentType;
 import ru.job4j.car.accident.model.Rule;
 import java.util.HashSet;
 import java.util.List;
 
-@Repository
-public class AccidentJdbcTemplate {
+//@Repository
+public class AccidentJdbcTemplate implements AccidentTypeRepository,
+                                                                                           AccidentRepository,
+                                                                                           RuleRepository {
     private final JdbcTemplate jdbc;
 
     public AccidentJdbcTemplate(JdbcTemplate jdbc) {

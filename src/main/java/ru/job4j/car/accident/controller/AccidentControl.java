@@ -6,13 +6,14 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import ru.job4j.car.accident.model.Accident;
+import ru.job4j.car.accident.repository.AccidentHibernate;
 import ru.job4j.car.accident.repository.AccidentJdbcTemplate;
 
 @Controller
 public class AccidentControl {
-    private final AccidentJdbcTemplate accidents;
+    private final AccidentHibernate accidents;
 
-    public AccidentControl(AccidentJdbcTemplate accidents) {
+    public AccidentControl(AccidentHibernate accidents) {
         this.accidents = accidents;
     }
 
