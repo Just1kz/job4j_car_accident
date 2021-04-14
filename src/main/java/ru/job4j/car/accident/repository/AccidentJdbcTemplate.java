@@ -9,9 +9,7 @@ import java.util.HashSet;
 import java.util.List;
 
 //@Repository
-public class AccidentJdbcTemplate implements AccidentTypeRepository,
-                                                                                           AccidentRepository,
-                                                                                           RuleRepository {
+public class AccidentJdbcTemplate {
     private final JdbcTemplate jdbc;
 
     public AccidentJdbcTemplate(JdbcTemplate jdbc) {

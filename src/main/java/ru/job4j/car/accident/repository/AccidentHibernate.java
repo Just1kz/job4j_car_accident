@@ -12,10 +12,8 @@ import javax.persistence.EntityManager;
 import java.util.List;
 
 
-@Repository
-public class AccidentHibernate implements AccidentRepository,
-                                                                                   AccidentTypeRepository,
-                                                                                   RuleRepository {
+//@Repository
+public class AccidentHibernate {
     private final SessionFactory sf;
 
     @Autowired
@@ -23,7 +21,6 @@ public class AccidentHibernate implements AccidentRepository,
         this.sf = sf;
     }
 
-    @Override
     public List<Accident> getAllAccidents() {
         try (Session session = sf.openSession()) {
             return session.createQuery(
@@ -31,7 +28,6 @@ public class AccidentHibernate implements AccidentRepository,
         }
     }
 
-    @Override
     public void addOrUpdateAccident(Accident accident, int type, String[] ids) {
         AccidentType accidentType = findTypeByID(type);
         accident.setAccidentType(accidentType);
@@ -83,7 +79,6 @@ public class AccidentHibernate implements AccidentRepository,
         }
     }
 
-    @Override
     public Accident findAccidentByID(int id) {
         try (Session session = sf.openSession()) {
             return session.createQuery(
@@ -94,7 +89,6 @@ public class AccidentHibernate implements AccidentRepository,
         }
     }
 
-    @Override
     public Accident findAccidentByNameAndAddress(String name, String address) {
         try (Session session = sf.openSession()) {
             return (Accident) session.createQuery("select distinct c from Accident c join fetch c.rules where c.name = :name and c.address = :address order by c.id")
@@ -104,14 +98,12 @@ public class AccidentHibernate implements AccidentRepository,
         }
     }
 
-    @Override
     public List<AccidentType> getAllAccidentType() {
         try (Session session = sf.openSession()) {
             return session.createQuery("from AccidentType").list();
         }
     }
 
-    @Override
     public AccidentType findTypeByID(int id) {
         try (Session session = sf.openSession()) {
             return (AccidentType) session.createQuery(
@@ -121,7 +113,6 @@ public class AccidentHibernate implements AccidentRepository,
         }
     }
 
-    @Override
     public Rule findRuleByID(int id) {
         try (Session session = sf.openSession()) {
             return (Rule) session.createQuery(
@@ -131,12 +122,10 @@ public class AccidentHibernate implements AccidentRepository,
         }
     }
 
-    @Override
     public List<Rule> getAllRulesOfAccident(int id) {
         return null;
     }
 
-    @Override
     public List<Rule> getAllRules() {
         try (Session session = sf.openSession()) {
             return session.createQuery("from Rule order by id ").list();

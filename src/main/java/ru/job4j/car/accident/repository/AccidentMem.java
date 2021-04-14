@@ -50,7 +50,7 @@ public class AccidentMem {
     public void addOrUpdateAccident(Accident accident, int type, String[] ids) {
         AccidentType accidentType = findByIdAccidentType(type);
         Set<Rule> ruleSet = findByIdRuleInMassive(ids);
-        accident.setAccidentType(accidentType);
+//        accident.setAccidentType(accidentType);
         accident.setRules(ruleSet);
         if (accident.getId() == 0) {
             accident.setId(ACC_ID_FOR_ACCIDENT.incrementAndGet());

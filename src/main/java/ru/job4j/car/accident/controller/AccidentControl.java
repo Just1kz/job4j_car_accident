@@ -11,38 +11,38 @@ import ru.job4j.car.accident.repository.AccidentJdbcTemplate;
 
 @Controller
 public class AccidentControl {
-    private final AccidentHibernate accidents;
-
-    public AccidentControl(AccidentHibernate accidents) {
-        this.accidents = accidents;
-    }
-
-    @GetMapping("/")
-    public String index(Model model) {
-        model.addAttribute("allAccident", accidents.getAllAccidents());
-        return "index";
-    }
-
-    @GetMapping("/create")
-    public String create(Model model) {
-        model.addAttribute("types", accidents.getAllAccidentType());
-        model.addAttribute("rules", accidents.getAllRules());
-        return "accident/create";
-    }
-
-    @GetMapping("/edit")
-    public String edit(@RequestParam("id") int id, Model model) {
-        model.addAttribute("accident", accidents.findAccidentByID(id));
-        model.addAttribute("types", accidents.getAllAccidentType());
-        model.addAttribute("rules", accidents.getAllRules());
-        return "accident/edit";
-    }
-
-    @PostMapping("/save")
-    public String save(@ModelAttribute Accident accident,
-                       @RequestParam("type.id") int id,
-                       @RequestParam("rIds") String[] ids) {
-        accidents.addOrUpdateAccident(accident, id, ids);
-        return "redirect:/";
-    }
+//    private final AccidentHibernate accidents;
+//
+//    public AccidentControl(AccidentHibernate accidents) {
+//        this.accidents = accidents;
+//    }
+//
+//    @GetMapping("/")
+//    public String index(Model model) {
+//        model.addAttribute("allAccident", accidents.getAllAccidents());
+//        return "index";
+//    }
+//
+//    @GetMapping("/create")
+//    public String create(Model model) {
+//        model.addAttribute("types", accidents.getAllAccidentType());
+//        model.addAttribute("rules", accidents.getAllRules());
+//        return "accident/create";
+//    }
+//
+//    @GetMapping("/edit")
+//    public String edit(@RequestParam("id") int id, Model model) {
+//        model.addAttribute("accident", accidents.findAccidentByID(id));
+//        model.addAttribute("types", accidents.getAllAccidentType());
+//        model.addAttribute("rules", accidents.getAllRules());
+//        return "accident/edit";
+//    }
+//
+//    @PostMapping("/save")
+//    public String save(@ModelAttribute Accident accident,
+//                       @RequestParam("type.id") int id,
+//                       @RequestParam("rIds") String[] ids) {
+//        accidents.addOrUpdateAccident(accident, id, ids);
+//        return "redirect:/";
+//    }
 }
