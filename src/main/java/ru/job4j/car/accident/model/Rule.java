@@ -3,6 +3,7 @@ package ru.job4j.car.accident.model;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -58,4 +59,14 @@ public class Rule {
         return Objects.hash(id);
     }
 
+//    @ManyToMany(mappedBy = "rules")
+//    private Collection<Accident> accident;
+//
+//    public Collection<Accident> getAccident() {
+//        return accident;
+//    }
+//
+//    public void setAccident(Collection<Accident> accident) {
+//        this.accident = accident;
+//    }
 }

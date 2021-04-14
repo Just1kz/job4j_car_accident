@@ -18,9 +18,9 @@ create table if not exists accident (
 );
 
 create table if not exists accident_rule(
+    id serial primary key,
     id_accident int references accident(id),
-    id_rule int references rule(id),
-    UNIQUE (id_accident, id_rule)
+    id_rule int references rule(id)
 );
 
 insert into type(name) values ('Две машины');
@@ -52,13 +52,13 @@ insert into accident_rule(id_accident, id_rule) VALUES (2, 2);
 insert into accident_rule(id_accident, id_rule) VALUES (3, 1);
 insert into accident_rule(id_accident, id_rule) VALUES (3, 3);
 
-select
-accident.id,
-       accident.name,
-       accident.text,
-       accident.address,
-       accident.status,
-       a.id,
-       a.name
-from accident
-left join type a on accident.type_id = a.id;
+-- select
+-- accident.id,
+--        accident.name,
+--        accident.text,
+--        accident.address,
+--        accident.status,
+--        a.id,
+--        a.name
+-- from accident
+-- left join type a on accident.type_id = a.id;

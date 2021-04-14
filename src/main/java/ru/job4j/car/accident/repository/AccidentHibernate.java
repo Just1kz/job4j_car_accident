@@ -7,6 +7,8 @@ import org.springframework.stereotype.Repository;
 import ru.job4j.car.accident.model.Accident;
 import ru.job4j.car.accident.model.AccidentType;
 import ru.job4j.car.accident.model.Rule;
+
+import javax.persistence.EntityManager;
 import java.util.List;
 
 
@@ -35,44 +37,49 @@ public class AccidentHibernate implements AccidentRepository,
         accident.setAccidentType(accidentType);
 
         for (String rsl : ids) {
-            accident.addRules(findRuleByID(Integer.parseInt(rsl)));
+            accident.getRules().add(findRuleByID(Integer.parseInt(rsl)));
+//            accident.addRules(findRuleByID(Integer.parseInt(rsl)));
         }
 
-        if (accident.getId() == 0) {
-            addAccident(accident);
-            try (Session session = sf.openSession()) {
-//                session.createQuery("insert into Accident(name, type_id, text, address, status, rules) ")
-//                        .setParameter("id", accident.getId())
-//                        .executeUpdate();
+            if (accident.getId() == 0) {
+                addAccident(accident);
+            } else {
+//                updateAccident(accident);
+                try (Session session = sf.openSession()) {
+                    EntityManager em = session.getEntityManagerFactory().createEntityManager();
+                    em.getTransaction().begin();
+                    session.update(accident);
+                    em.getTransaction().commit();
+                }
             }
-        } else {
-
-            updateAccident(accident);
-        }
     }
 
     public void addAccident(Accident accident) {
         try (Session session = sf.openSession()) {
-            session.getTransaction().begin();
+            EntityManager em = session.getEntityManagerFactory().createEntityManager();
+            em.getTransaction().begin();
             session.save(accident);
+            em.getTransaction().commit();
         }
     }
 
     public void updateAccident(Accident accident) {
         try (Session session = sf.openSession()) {
-            session.getTransaction().begin();
+            EntityManager em = session.getEntityManagerFactory().createEntityManager();
+            em.getTransaction().begin();
             session.createQuery(
                           "update Accident "
-                            + "set name = :name,  "
+                            + "set name = :name, accidentType = :type, "
                             + "text = :text, address = :address, status = :status "
                             + "where id = :id")
                     .setParameter("name", accident.getName())
                     .setParameter("text", accident.getText())
                     .setParameter("address", accident.getAddress())
                     .setParameter("status", accident.getStatus())
-//                    .setParameter("rules", accident.getRules())
+                    .setParameter("type", accident.getAccidentType())
                     .setParameter("id", accident.getId())
                     .executeUpdate();
+            session.getTransaction().commit();
         }
     }
 
