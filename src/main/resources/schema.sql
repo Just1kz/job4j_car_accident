@@ -1,3 +1,8 @@
+drop table if exists accident_rule;
+drop table if exists accident;
+drop table if exists type;
+drop table if exists rule;
+
 create table if not exists type(
     id serial primary key,
     name varchar(2000)

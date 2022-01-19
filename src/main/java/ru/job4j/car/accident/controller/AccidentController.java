@@ -7,13 +7,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import ru.job4j.car.accident.model.Accident;
 import ru.job4j.car.accident.repository.AccidentHibernate;
-import ru.job4j.car.accident.repository.AccidentJdbcTemplate;
 
 @Controller
-public class AccidentControl {
+public class AccidentController {
+
     private final AccidentHibernate accidents;
 
-    public AccidentControl(AccidentHibernate accidents) {
+    public AccidentController(AccidentHibernate accidents) {
         this.accidents = accidents;
     }
 
@@ -39,9 +39,15 @@ public class AccidentControl {
     }
 
     @PostMapping("/save")
-    public String save(@ModelAttribute Accident accident,
+    public String save(@ModelAttribute("accident") Accident accident,
+                       @RequestParam("name") String name,
+                       @RequestParam("text") String text,
+                       @RequestParam("address") String address,
                        @RequestParam("type.id") int id,
                        @RequestParam("rIds") String[] ids) {
+        if (accident.getId() == 0) {
+            accident = new Accident(name, text, address);
+        }
         accidents.addOrUpdateAccident(accident, id, ids);
         return "redirect:/";
     }

@@ -1,13 +1,8 @@
 package ru.job4j.car.accident.model;
 
-import org.springframework.stereotype.Component;
-
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
-@Component
 @Entity
 @Table(name="rule")
 public class Rule {

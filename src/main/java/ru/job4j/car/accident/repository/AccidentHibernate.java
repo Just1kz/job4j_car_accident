@@ -24,8 +24,11 @@ public class AccidentHibernate implements AccidentRepository,
     @Override
     public List<Accident> getAllAccidents() {
         try (Session session = sf.openSession()) {
-            return session.createQuery(
-                    "select distinct c from Accident c join fetch c.rules order by c.id").list();
+            session.beginTransaction();
+            List<Accident> rsl = session.createQuery(
+                    "select distinct c from Accident c join fetch c.rules order by c.id").getResultList();
+            session.getTransaction().commit();
+            return rsl;
         }
     }
 
@@ -38,52 +41,28 @@ public class AccidentHibernate implements AccidentRepository,
             accident.addRules(findRuleByID(Integer.parseInt(rsl)));
         }
 
-        if (accident.getId() == 0) {
-            addAccident(accident);
-            try (Session session = sf.openSession()) {
-//                session.createQuery("insert into Accident(name, type_id, text, address, status, rules) ")
-//                        .setParameter("id", accident.getId())
-//                        .executeUpdate();
-            }
-        } else {
-
-            updateAccident(accident);
-        }
+            saveOrUpdate(accident);
     }
 
-    public void addAccident(Accident accident) {
+    public void saveOrUpdate(Accident accident) {
         try (Session session = sf.openSession()) {
-            session.getTransaction().begin();
-            session.save(accident);
-        }
-    }
-
-    public void updateAccident(Accident accident) {
-        try (Session session = sf.openSession()) {
-            session.getTransaction().begin();
-            session.createQuery(
-                          "update Accident "
-                            + "set name = :name,  "
-                            + "text = :text, address = :address, status = :status "
-                            + "where id = :id")
-                    .setParameter("name", accident.getName())
-                    .setParameter("text", accident.getText())
-                    .setParameter("address", accident.getAddress())
-                    .setParameter("status", accident.getStatus())
-//                    .setParameter("rules", accident.getRules())
-                    .setParameter("id", accident.getId())
-                    .executeUpdate();
+            session.beginTransaction();
+            session.saveOrUpdate(accident);
+            session.getTransaction().commit();
         }
     }
 
     @Override
     public Accident findAccidentByID(int id) {
         try (Session session = sf.openSession()) {
-            return session.createQuery(
-                    "select distinct c from Accident c join fetch c.rules where c.id = :id order by c.id",
-                    Accident.class)
+            session.beginTransaction();
+            Accident accident = session.createQuery(
+                            "select distinct c from Accident c join fetch c.rules where c.id = :id order by c.id",
+                            Accident.class)
                     .setParameter("id", id)
                     .uniqueResult();
+            session.getTransaction().commit();
+            return accident;
         }
     }
 

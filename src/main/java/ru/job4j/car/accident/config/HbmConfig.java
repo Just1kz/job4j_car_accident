@@ -43,6 +43,7 @@ public class HbmConfig {
         Properties cfg = new Properties();
         cfg.setProperty("hibernate.dialect", dialect);
         cfg.setProperty("hibernate.hbm2ddl.auto", update);
+        cfg.setProperty("hibernate.show_sql", "true");
         sessionFactory.setHibernateProperties(cfg);
         return sessionFactory;
     }

@@ -1,14 +1,11 @@
 package ru.job4j.car.accident.model;
 
-import org.springframework.stereotype.Component;
-
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
-@Component
-@Entity(name = "Accident")
+@Entity
 @Table(name="accident")
 public class Accident {
     @Id
@@ -18,7 +15,8 @@ public class Accident {
     @Column(name = "name")
     private String name;
 
-    @ManyToOne
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "type_id")
     private AccidentType accidentType;
 
     @Column(name = "text")
@@ -30,10 +28,10 @@ public class Accident {
     @Column(name = "status")
     private String status = "Зарегистрирована";
 
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "accident_rule",
-            joinColumns = { @JoinColumn(name = "id_accident") },
-            inverseJoinColumns = { @JoinColumn(name = "id_rule") })
+            joinColumns = @JoinColumn(name = "id_accident"),
+            inverseJoinColumns = @JoinColumn(name = "id_rule") )
     private Set<Rule> rules = new HashSet<>();
 
     public Accident() {
